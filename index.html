@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonora</title>
+    <link rel="stylesheet" href="Style.css">
+    
+</head>
+<body>
+     <header class="header">
+         <div class="logo">
+             <img src="" alt="" height="36" />
+             <span>SONORA</span>
+        </div>
+            
+        <form class="search">
+             <input type="text" placeholder="Rechercher uun preset"/>
+        </form>
+
+        <button class="burger" id="burgerbtn" aria-label="Menu">
+             <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav" id="navMenu">
+             <a href="#">Présets</a>
+            <a href="#">Connexion</a>
+            <a href="#">Inscription</a>
+        </nav>
+
+    </header>
+    
+   <div class="synth-card">
+  <div class="oscillo-wrap">
+    <canvas id="oscilloscope" width="400" height="100"></canvas>
+  </div>
+  <div class="knob-row">
+    <!-- Boutons radio pour le type d'onde -->
+        <div class="radio-group">
+        <label><input type="radio" name="waveform" value="sine" checked> Sine</label>
+        <label><input type="radio" name="waveform" value="square"> Square</label>
+        <label><input type="radio" name="waveform" value="sawtooth"> Sawtooth</label>
+        <label><input type="radio" name="waveform" value="triangle"> Triangle</label>
+  </div>
+
+  <!-- Les knobs rotatifs -->
+  <div class="knob-wrap">
+    <canvas class="knob" id="octaveKnob" width="60" height="60"></canvas>
+    <label>Octave</label>
+  </div>
+  <div class="knob-wrap">
+    <canvas class="knob" id="semiKnob" width="60" height="60"></canvas>
+    <label>Semi</label>
+  </div>
+  <div class="knob-wrap">
+    <canvas class="knob" id="fineKnob"width="60" height="60"></canvas>
+    <label>Fine</label>
+  </div>
+</div>
+  </div>
+  <button id="playBtn">Jouer / Stop</button>
+</div>
+
+
+
+<script src="Script/oscillateur_.js"> </script>
+</body>
+
+
+</html>
