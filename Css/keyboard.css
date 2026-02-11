@@ -1,0 +1,84 @@
+.play-and-keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* conteneur du clavier */
+.keyboard {
+  position: relative;
+  display: flex;
+  gap: 0;                 /* les touches blanches se touchent */
+  height: 80px;
+  padding: 4px;
+  background: #111;
+  border-radius: 6px;
+}
+
+/* touches de base */
+.keyboard .key {
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 10px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  user-select: none;
+}
+
+/* touches blanches */
+.keyboard .key.white {
+  position: relative;
+  width: 36px;
+  height: 100%;
+  background: #fdfdfd;
+  border: 1px solid #ccc;
+  border-radius: 0 0 4px 4px;
+  color: #555;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+/* touches noires */
+.keyboard .key.black {
+  position: absolute;
+  width: 24px;
+  height: 55%;
+  background: #222;
+  border-radius: 0 0 3px 3px;
+  border: 1px solid #000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  z-index: 2;
+}
+
+/* positionnement des noires au-dessus des blanches */
+.keyboard .key.black:nth-of-type(8)  { /* C# au-dessus entre C et D */
+  left: 26px;
+}
+.keyboard .key.black:nth-of-type(9)  { /* D# entre D et E */
+  left: 62px;
+}
+/* pas de noire entre E et F */
+.keyboard .key.black:nth-of-type(10) { /* F# */
+  left: 134px;
+}
+.keyboard .key.black:nth-of-type(11) { /* G# */
+  left: 170px;
+}
+.keyboard .key.black:nth-of-type(12) { /* A# */
+  left: 206px;
+}
+
+/* interactions */
+.keyboard .key.white:active {
+  background: #e3e3e3;
+  transform: translateY(2px);
+  box-shadow: 0 1px 1px rgba(0,0,0,0.4);
+}
+.keyboard .key.black:active {
+  background: #333;
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+}

@@ -1,0 +1,365 @@
+/* === GLOBAL === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #1a1a1c;
+  color: #eee;
+  font-family: 'Roboto', sans-serif;
+  padding: 20px;
+}
+
+/* === HEADER === */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #111;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+.logo span {
+  color: #ff5c2f;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+.search input {
+  padding: 8px 15px;
+  width: 260px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+}
+.nav a {
+  color: #ff5c2f;
+  margin-left: 15px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+.nav a:hover {
+  color: #ffa64d;
+}
+
+/* Bouton Presets comme lien nav */
+#presetsMenuBtn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+#presetsMenuBtn:hover {
+  opacity: 0.8;
+}
+
+
+/* === GRID POUR LES CARDS === */
+.synth-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* === CARDS === */
+.card {
+  background: #222;
+  padding: 18px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+  min-width: 0;
+}
+/* relative width */
+.osc-card { flex: 1.2; }
+.filter-card { flex: 0.8; }
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Bordure colorée & hover - utiliser variables CSS */
+:root {
+  --orange: #ff5c2f;
+  --orange-light: #ff5c2f;
+  --purple: #b36bff;
+  --purple-light: rgba(179, 107, 255, 0.5);
+  --green: #39caff;
+  --green-light: rgba(57, 202, 255, 0.5);
+  --blue: #39caff;           /* ✅ BLEU pour filtre */
+  --blue-light: rgba(57, 202, 255, 0.5);  /* ✅ BLEU clair pour glow */
+}
+
+.card[data-color="orange"] {
+  border-top: 4px solid var(--orange);
+}
+.card[data-color="purple"] {
+  border-top: 4px solid var(--purple);
+}
+.card[data-color="green"] {
+  border-top: 4px solid var(--green);
+}
+.card[data-color="blue"] {      /* ✅ Nouvelle règle pour bleu */
+  border-top: 4px solid var(--blue);
+}
+
+.card[data-color="orange"]:hover {
+  box-shadow: 0 0 15px 4px var(--orange-light);
+}
+.card[data-color="purple"]:hover {
+  box-shadow: 0 0 15px 4px var(--purple-light);
+}
+.card[data-color="green"]:hover {
+  box-shadow: 0 0 15px 4px var(--green-light);
+}
+.card[data-color="blue"]:hover {  /* ✅ Hover bleu */
+  box-shadow: 0 0 15px 4px var(--blue-light);
+}
+
+/* Titres des cards */
+.card h3 {
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* === OSCILLOSCOPE ET FILTRE === */
+.oscilloscope,
+#filter-curve,
+.oscillo-wrap {
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  background: #111;
+  box-shadow: inset 0 0 10px #000;
+  display: block;
+  margin-bottom: 15px;
+}
+.oscillo-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* === KNOBS === */
+.knob-wrap {
+  text-align: center;
+}
+.knob {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  background: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+}
+.knob-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 12px;
+}
+
+/* === FILTER SETTINGS - AMÉLIORÉ === */
+.filter-row {
+  margin-bottom: 10px;
+}
+.filter-row label {
+  display: inline-block;
+  width: 90px;
+}
+.filter-row input[type="range"] {
+  width: 55%;
+}
+
+/* ✅ DROPDOWN FILTRES - STYLE MODERNE & PARFAIT */
+#filter-type {
+  width: 60%;
+  padding: 12px 45px 12px 16px;
+  border-radius: 12px;
+  background: #222;
+  color: var(--blue);           /* ✅ Texte bleu */
+  border: 2px solid #333;
+  font-weight: 700;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+  
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  
+  /* Flèche SVG BLEUE maintenant */
+  background-image: url("data:image/svg+xml,%3csvg fill='%2339caff' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 18px;
+  
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#filter-type:hover {
+  border-color: var(--blue);
+  box-shadow: 0 0 20px var(--blue-light);  /* ✅ Glow bleu */
+  background-color: #2a2a2a;
+  transform: translateY(-1px);
+}
+
+#filter-type:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 25px var(--blue-light), inset 0 0 8px rgba(0,0,0,0.5);  /* ✅ Focus bleu */
+  background-color: #2b2a2a;
+}
+
+#filter-type option {
+  background-color: #222;
+  color: var(--blue);  /* ✅ Options bleu */
+  font-weight: normal;
+  padding: 8px;
+}
+
+@media (pointer: coarse) {
+  #filter-type {
+    background-image: none;
+    padding-right: 16px;
+  }
+}
+
+/* === BOUTON PLAY === */
+#playBtn {
+  padding: 14px 30px;
+  margin-top: 20px;
+  background: linear-gradient(90deg, var(--orange), var(--orange-light));
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #222;
+  box-shadow: 0 5px 15px rgba(255, 122, 26, 0.3);
+  transition: all 0.3s ease;
+  min-width: 150px;
+  text-align: center;
+  user-select: none;
+  display: inline-block;
+}
+#playBtn:hover {
+  box-shadow: 0 8px 25px rgba(255, 122, 26, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Style bouton générique */
+.button {
+  padding: 10px 20px;
+  border-radius: 25px;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+.button:hover {
+  box-shadow: 0 0 20px rgba(107, 92, 231, 0.6);
+  transform: translateY(-1px);
+  background: linear-gradient(90deg, #7a1ecf, #3a89fc);
+}
+
+/* === WAVE GROUP === */
+.wave-group {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 10px;
+}
+.wave-group label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #18181b;
+  border: 1px solid #2b2b30;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #bbb;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.wave-group label span {
+  pointer-events: none;
+}
+.wave-group input[type="radio"] {
+  display: none;
+}
+.wave-group input[type="radio"]:checked + span {
+  color: #111;
+}
+.wave-group label:has(input[type="radio"]:checked) {
+  background: var(--orange);
+  border-color: var(--orange-light);
+  color: #111;
+  box-shadow: 0 0 10px rgba(255,122,26,0.4);
+}
+.wave-group label:hover {
+  border-color: var(--orange);
+}
+
+/* === SYNC SWITCH === */
+.sync-detune {
+  margin-top: 10px;
+}
+.sync-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #b8b8c4;
+}
+.sync-toggle input[type="checkbox"] {
+  display: none;
+}
+.sync-switch {
+  position: relative;
+  width: 32px;
+  height: 16px;
+  border-radius: 999px;
+  background: #26262b;
+  border: 1px solid #3a3a42;
+  box-sizing: border-box;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.sync-switch::before {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #cfcfd7;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.sync-toggle input[type="checkbox"]:checked + .sync-switch {
+  background: var(--orange);
+  border-color: var(--orange-light);
+}
+.sync-toggle input[type="checkbox"]:checked + .sync-switch::before {
+  transform: translateX(14px);
+  background: #111;
+}
+.sync-label {
+  user-select: none;
+}
