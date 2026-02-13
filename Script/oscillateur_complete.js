@@ -659,7 +659,84 @@ window.addEventListener('load', () => {
 
     attachKnob('filter-decay-knob', 'filter-decay-range', (v) => {
       document.getElementById('filter-decay-display').textContent = Math.round(v) + ' ms';
+      attachKnob('filter-decay-knob', 'filter-decay-range', (v) => {
+    const displayEl = document.getElementById('filter-decay-display');
+    if (displayEl) displayEl.textContent = Math.round(v) + ' ms';
+    updateFilterADSRDisplay();
+  });
 
+  attachKnob('filter-sustain-knob', 'filter-sustain-range', (v) => {
+    const displayEl = document.getElementById('filter-sustain-display');
+    if (displayEl) displayEl.textContent = parseFloat(v).toFixed(2);
+    updateFilterADSRDisplay();
+  });
+
+  attachKnob('filter-release-knob', 'filter-release-range', (v) => {
+    const displayEl = document.getElementById('filter-release-display');
+    if (displayEl) displayEl.textContent = Math.round(v) + ' ms';
+    updateFilterADSRDisplay();
+  });
+
+  attachKnob('filter-amount-knob', 'filter-amount-range', (v) => {
+    filterADSR.amount = parseFloat(v);
+    const displayEl = document.getElementById('filter-amount-display');
+    if (displayEl) displayEl.textContent = Math.round(v) + ' Hz';
+  });
+
+  const filterEnvToggle = document.getElementById('filter-env-toggle');
+  if (filterEnvToggle) {
+    filterEnvToggle.addEventListener('change', (e) => {
+      filterADSR.enabled = e.target.checked;
+      console.log('🎛️ Filter Envelope:', filterADSR.enabled ? 'ON' : 'OFF');
+    });
+  }
+
+  updateFilterADSRDisplay();
+
+  /* ===== SÉLECTION DES FORMES D'ONDE ===== */
+  document.querySelectorAll('input[name="wave1"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      adsr.setOscillatorSettings({ waveform1: e.target.value });
+    });
+  });
+
+  document.querySelectorAll('input[name="wave2"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      adsr.setOscillatorSettings({ waveform2: e.target.value });
+    });
+  });
+
+  /* ===== TOGGLE SYNC ===== */
+  const syncToggle = document.getElementById('sync-toggle');
+  if (syncToggle) {
+    syncToggle.addEventListener('change', () => {
+      syncOn = syncToggle.checked;
+      adsr.setOscillatorSettings({ sync: syncOn });
+      console.log('🔄 Sync:', syncOn ? 'ON' : 'OFF');
+    });
+  }
+
+  /* ===== AFFICHAGE DU NOMBRE DE VOIX ACTIVES ===== */
+  setInterval(() => {
+    const status = adsr.getStatus();
+    const voiceCountEl = document.getElementById('voice-count');
+    if (voiceCountEl) {
+      voiceCountEl.textContent = `${status.activeVoices}/${status.totalVoices}`;
+    }
+  }, 100);
+
+  initUI();
+  
+  /* ✅ INITIALISER LA COURBE ADSR AU DÉMARRAGE */
+  setTimeout(() => {
+    if (adsr && adsr.drawADSRCurve) {
+      adsr.drawADSRCurve('adsr-curve');
+      console.log('✅ Courbe ADSR initialisée au démarrage');
+    }
+  }, 100);
+  
+  console.log('✅ Interface initialisée - Système ADSR entièrement opérationnel!');
+});
       
 
 /* ===== CLAVIER VIRTUEL (SOURIS) ===== */
@@ -724,5 +801,5 @@ function handleKey(event) {
 
 window.addEventListener('keydown', handleKey);
 window.addEventListener('keyup', handleKey);
-})})
+})
 
