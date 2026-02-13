@@ -557,6 +557,111 @@ window.addEventListener('load', () => {
   // Initialiser l'affichage ADSR au démarrage
   updateADSRDisplay();
 
+  /* ===== FILTER ENVELOPE ===== */
+    const filterADSR = {
+      attack: 0.05,
+      decay: 0.2,
+      sustain: 0.3,
+      release: 0.3,
+      amount: 2000,
+      enabled: true
+    };
+
+    function updateFilterADSRDisplay() {
+      const attack = parseFloat(document.getElementById('filter-attack-range')?.value || 50) / 1000;
+      const decay = parseFloat(document.getElementById('filter-decay-range')?.value || 200) / 1000;
+      const sustain = parseFloat(document.getElementById('filter-sustain-range')?.value || 0.3);
+      const release = parseFloat(document.getElementById('filter-release-range')?.value || 300) / 1000;
+      
+      filterADSR.attack = attack;
+      filterADSR.decay = decay;
+      filterADSR.sustain = sustain;
+      filterADSR.release = release;
+      
+      drawFilterADSRCurve();
+    }
+
+    function drawFilterADSRCurve() {
+      const canvas = document.getElementById('filter-adsr-curve');
+      if (!canvas) return;
+      
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const w = Math.max(1, rect.width);
+      const h = Math.max(1, rect.height);
+      
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      
+      ctx.fillStyle = '#111';
+      ctx.fillRect(0, 0, w, h);
+      
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (let i = 0; i <= 5; i++) {
+        const y = (h * i) / 5;
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+      }
+      for (let i = 0; i <= 10; i++) {
+        const x = (w * i) / 10;
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, h);
+      }
+      ctx.stroke();
+      
+      const padding = 14;
+      const A = Math.max(0.001, filterADSR.attack);
+      const D = Math.max(0.001, filterADSR.decay);
+      const S = Math.max(0, Math.min(1, filterADSR.sustain));
+      const R = Math.max(0.001, filterADSR.release);
+      const hold = 0.25;
+      const total = A + D + hold + R;
+      
+      const x0 = padding;
+      const y0 = h - padding;
+      const xA = x0 + ((A / total) * (w - 2 * padding));
+      const xD = xA + ((D / total) * (w - 2 * padding));
+      const xS = xD + ((hold / total) * (w - 2 * padding));
+      const xR = xS + ((R / total) * (w - 2 * padding));
+      const yPeak = padding;
+      const ySustain = padding + (1 - S) * (h - 2 * padding);
+      
+      ctx.strokeStyle = '#39caff';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(xA, yPeak);
+      ctx.lineTo(xD, ySustain);
+      ctx.lineTo(xS, ySustain);
+      ctx.lineTo(xR, y0);
+      ctx.stroke();
+      
+      ctx.fillStyle = '#39caff';
+      ctx.font = '12px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText('A', (x0 + xA) / 2, h - 6);
+      ctx.fillText('D', (xA + xD) / 2, h - 6);
+      ctx.fillText('S', (xD + xS) / 2, h - 6);
+      ctx.fillText('R', (xS + xR) / 2, h - 6);
+    }
+
+    attachKnob('filter-attack-knob', 'filter-attack-range', (v) => {
+      document.getElementById('filter-attack-display').textContent = Math.round(v) + ' ms';
+      updateFilterADSRDisplay();
+    });
+
+    attachKnob('filter-decay-knob', 'filter-decay-range', (v) => {
+      document.getElementById('filter-decay-display').textContent = Math.round(v) + ' ms';
+
+      
+
 /* ===== CLAVIER VIRTUEL (SOURIS) ===== */
 
 const keys = document.querySelectorAll('.keyboard .key');
@@ -619,4 +724,5 @@ function handleKey(event) {
 
 window.addEventListener('keydown', handleKey);
 window.addEventListener('keyup', handleKey);
-})
+})})
+
