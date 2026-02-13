@@ -8,23 +8,19 @@
   <link rel="stylesheet" href="Css/preset.css">
   <link rel="stylesheet" href="Css/keyboard.css">
   <link rel="stylesheet" href="Css/adsr.css">
-  
-
 </head>
 <body>
+
 <header class="header">
   <div class="logo">
     <span>SONORA</span>
   </div>
-
   <form class="search">
     <input type="text" placeholder="Rechercher un preset">
   </form>
-
   <button class="burger" id="burgerbtn" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-
   <nav class="nav" id="navMenu">
     <button id="presetsMenuBtn" class="nav-link">Presets</button>
     <a href="#">Connexion</a>
@@ -40,7 +36,6 @@
         <h2>💾 Presets</h2>
         <button id="closePresetsModal" class="close-btn">&times;</button>
       </div>
-
       <div class="presets-modal-body">
         <!-- Section Save -->
         <div class="preset-section">
@@ -50,12 +45,10 @@
             <button id="savePresetBtn">💾 SAVE</button>
           </div>
         </div>
-
         <!-- Section Load/Delete -->
         <div class="preset-section">
           <h3>Charger / Supprimer</h3>
           <button id="listPresetsBtn" class="btn-list">📋 Afficher mes presets</button>
-          
           <div id="presetsList" class="presets-list" style="display: none;">
             <select id="presetsSelect" size="8">
               <option value="">-- Sélectionnez un preset --</option>
@@ -69,58 +62,44 @@
       </div>
     </div>
   </div>
-
-  <!-- Overlay du modal -->
   <div id="presetsOverlay" class="presets-overlay"></div>
 
   <div class="synth-grid">
-
     <!-- OSCILLATEUR 1 -->
     <div class="osc-card card" data-color="orange" style="--card-color:#ff5c2f;">
       <h3>Oscillateur 1</h3>
       <div class="oscillo-wrap">
-        <canvas class="oscilloscope" id="osc1-scope" width="400" height="120"></canvas>
+        anvas class="oscilloscope" id="osc1-scope" width="400" height="120"></canvas>
       </div>
-
       <div class="radio-group wave-group">
         <label><input type="radio" name="wave1" value="sine" checked> Sine</label>
         <label><input type="radio" name="wave1" value="square"> Square</label>
         <label><input type="radio" name="wave1" value="sawtooth"> Saw</label>
         <label><input type="radio" name="wave1" value="triangle"> Triangle</label>
       </div>
-
       <div class="knob-row">
-        <!-- Volume -->
         <div class="knob-wrap">
-          <canvas class="knob" id="volume1" width="60" height="60"></canvas>
+          anvas class="knob" id="volume1" width="60" height="60"></canvas>
           <label>Volume</label>
           <input type="range" id="volume1-range" min="0" max="1" step="0.01" value="0.5" style="display:none;">
         </div>
-
-        <!-- Octave 1 -->
         <div class="knob-wrap">
-          <canvas class="knob" id="octave1" width="60" height="60"></canvas>
+          anvas class="knob" id="octave1" width="60" height="60"></canvas>
           <label>Octave</label>
           <input type="range" id="octave1-range" min="-4" max="4" step="1" value="0" style="display:none;">
         </div>
-
-        <!-- Fine -->
         <div class="knob-wrap">
-          <canvas class="knob" id="fine1" width="60" height="60"></canvas>
+          anvas class="knob" id="fine1" width="60" height="60"></canvas>
           <label>Fine</label>
           <input type="range" id="fine1-range" min="-50" max="50" value="0" style="display:none;">
         </div>
-
-        <!-- Semitone -->
         <div class="knob-wrap">
-          <canvas class="knob" id="semi1" width="60" height="60"></canvas>
+          anvas class="knob" id="semi1" width="60" height="60"></canvas>
           <label>Semitone</label>
           <input type="range" id="semi1-range" min="-12" max="12" value="0" style="display:none;">
         </div>
-
-        <!-- Tune -->
         <div class="knob-wrap">
-          <canvas class="knob" id="tune1" width="60" height="60"></canvas>
+          anvas class="knob" id="tune1" width="60" height="60"></canvas>
           <label>Tune</label>
           <input type="range" id="tune1-range" min="-12" max="12" value="0" style="display:none;">
         </div>
@@ -131,9 +110,8 @@
     <div class="osc-card card" data-color="orange" style="--card-color:#ff5c2f;">
       <h3>Oscillateur 2</h3>
       <div class="oscillo-wrap">
-        <canvas class="oscilloscope" id="osc2-scope" width="400" height="120"></canvas>
+        anvas class="oscilloscope" id="osc2-scope" width="400" height="120"></canvas>
       </div>
-
       <div class="wave-sync-row">
         <div class="radio-group wave-group">
           <label><input type="radio" name="wave2" value="sine" checked> Sine</label>
@@ -142,45 +120,33 @@
           <label><input type="radio" name="wave2" value="triangle"> Triangle</label>
         </div>
       </div>
-
       <div class="knob-row">
-        <!-- Volume -->
         <div class="knob-wrap">
-          <canvas class="knob" id="volume2" width="60" height="60"></canvas>
+          anvas class="knob" id="volume2" width="60" height="60"></canvas>
           <label>Volume</label>
           <input type="range" id="volume2-range" min="0" max="1" step="0.01" value="0.5" style="display:none;">
         </div>
-
-        <!-- Octave 2 -->
         <div class="knob-wrap">
-          <canvas class="knob" id="octave2" width="60" height="60"></canvas>
+          anvas class="knob" id="octave2" width="60" height="60"></canvas>
           <label>Octave</label>
           <input type="range" id="octave2-range" min="-4" max="4" step="1" value="0" style="display:none;">
         </div>
-
-        <!-- Fine -->
         <div class="knob-wrap">
-          <canvas class="knob" id="fine2" width="60" height="60"></canvas>
+          anvas class="knob" id="fine2" width="60" height="60"></canvas>
           <label>Fine</label>
           <input type="range" id="fine2-range" min="-50" max="50" value="0" style="display:none;">
         </div>
-
-        <!-- Semitone -->
         <div class="knob-wrap">
-          <canvas class="knob" id="semi2" width="60" height="60"></canvas>
+          anvas class="knob" id="semi2" width="60" height="60"></canvas>
           <label>Semitone</label>
           <input type="range" id="semi2-range" min="-12" max="12" value="0" style="display:none;">
         </div>
-
-        <!-- Tune -->
         <div class="knob-wrap">
-          <canvas class="knob" id="tune2" width="60" height="60"></canvas>
+          anvas class="knob" id="tune2" width="60" height="60"></canvas>
           <label>Tune</label>
           <input type="range" id="tune2-range" min="-12" max="12" value="0" style="display:none;">
         </div>
       </div>
-
-      <!-- Sync toggle -->
       <div class="sync-detune">
         <label class="sync-toggle">
           <input type="checkbox" id="sync-toggle">
@@ -193,18 +159,15 @@
     <!-- FILTRE -->
     <div class="filter-card card" data-color="blue" style="--card-color:#39caff;">
       <h3>Filtre</h3>
-
       <div class="filter-bypass">
         <label class="filter-bypass-label">
           <input type="checkbox" id="filter-bypass">
           <span>Bypass</span>
         </label>
       </div>
-
       <div class="oscillo-wrap">
-        <canvas id="filter-curve" width="400" height="120"></canvas>
+        anvas id="filter-curve" width="400" height="120"></canvas>
       </div>
-
       <div class="filter-knob-row">
         <div class="filter-type-wrap">
           <label>Type</label>
@@ -215,77 +178,60 @@
             <option value="notch">Notch</option>
           </select>
         </div>
-
         <div class="knob-wrap">
-          <canvas class="knob" id="filterFreq" width="60" height="60"></canvas>
+          anvas class="knob" id="filterFreq" width="60" height="60"></canvas>
           <label>Cutoff</label>
           <span class="param-value" id="freq-val">800 Hz</span>
           <input type="range" id="freq-range" min="40" max="6000" step="1" value="800" style="display:none;">
         </div>
-
         <div class="knob-wrap">
-          <canvas class="knob" id="filterQ" width="60" height="60"></canvas>
+          anvas class="knob" id="filterQ" width="60" height="60"></canvas>
           <label>Q</label>
           <span class="param-value" id="q-val">1.2</span>
           <input type="range" id="q-range" min="0.1" max="12" step="0.1" value="1.2" style="display:none;">
         </div>
       </div>
     </div>
-
-
-
-  </div> <!-- /.synth-grid -->
-
-
-    <!-- ===== À AJOUTER DANS TON index.html ===== -->
-
-<!-- Section ADSR Envelope -->
-<section class="adsr-section">
-  <h2>ADSR Envelope</h2>
-  
-  <div class="adsr-controls">
-    <div class="adsr-control">
-      <label for="attack-range">Attack</label>
-      <input type="range" id="attack-range" min="0" max="2000" value="100" step="10">
-      <span id="attack-display">100 ms</span>
-    </div>
-
-    <div class="adsr-control">
-      <label for="decay-range">Decay</label>
-      <input type="range" id="decay-range" min="0" max="2000" value="300" step="10">
-      <span id="decay-display">300 ms</span>
-    </div>
-
-    <div class="adsr-control">
-      <label for="sustain-range">Sustain</label>
-      <input type="range" id="sustain-range" min="0" max="1" value="0.7" step="0.05">
-      <span id="sustain-display">0.70</span>
-    </div>
-
-    <div class="adsr-control">
-      <label for="release-range">Release</label>
-      <input type="range" id="release-range" min="0" max="2000" value="500" step="10">
-      <span id="release-display">500 ms</span>
-    </div>
   </div>
 
-  <div class="adsr-curve-container">
-    <h3>Envelope Curve</h3>
-    <canvas id="adsr-curve" width="400" height="200"></canvas>
-  </div>
-
-  <div class="voice-count-display">
-    <span>Active Voices:</span>
-    <span id="voice-count">0/4</span>
-  </div>
-</section>
-
-
+  <!-- Section ADSR Envelope -->
+  <section class="adsr-section">
+    <h2>ADSR Envelope</h2>
+    <div class="adsr-controls">
+      <div class="adsr-control">
+        <label for="attack-range">Attack</label>
+        <input type="range" id="attack-range" min="0" max="2000" value="100" step="10">
+        <span id="attack-display">100 ms</span>
+      </div>
+      <div class="adsr-control">
+        <label for="decay-range">Decay</label>
+        <input type="range" id="decay-range" min="0" max="2000" value="300" step="10">
+        <span id="decay-display">300 ms</span>
+      </div>
+      <div class="adsr-control">
+        <label for="sustain-range">Sustain</label>
+        <input type="range" id="sustain-range" min="0" max="1" value="0.7" step="0.05">
+        <span id="sustain-display">0.70</span>
+      </div>
+      <div class="adsr-control">
+        <label for="release-range">Release</label>
+        <input type="range" id="release-range" min="0" max="2000" value="500" step="10">
+        <span id="release-display">500 ms</span>
+      </div>
+    </div>
+    <div class="adsr-curve-container">
+      <h3>Envelope Curve</h3>
+      anvas id="adsr-curve" width="400" height="200"></canvas>
+    </div>
+    <div class="voice-count-display">
+      <span>Active Voices:</span>
+      <span id="voice-count">0/4</span>
+    </div>
+  </section>
 
   <!-- CLAVIER VIRTUEL -->
   <div class="play-and-keyboard">
     <div class="keyboard">
-      <!-- touches blanches -->
       <button class="key white" data-midi="60">C</button>
       <button class="key white" data-midi="62">D</button>
       <button class="key white" data-midi="64">E</button>
@@ -293,23 +239,10 @@
       <button class="key white" data-midi="67">G</button>
       <button class="key white" data-midi="69">A</button>
       <button class="key white" data-midi="71">B</button>
-
-      <!-- touches noires -->
-      <button class="key black" data-midi="61"></button> <!-- C# -->
-      <button class="key black" data-midi="63"></button> <!-- D# -->
-      <button class="key black" data-midi="66"></button> <!-- F# -->
-      <button class="key black" data-midi="68"></button> <!-- G# -->
-      <button class="key black" data-midi="70"></button> <!-- A# -->
+      <button class="key black" data-midi="61"></button>
+      <button class="key black" data-midi="63"></button>
+      <button class="key black" data-midi="66"></button>
+      <button class="key black" data-midi="68"></button>
+      <button class="key black" data-midi="70"></button>
     </div>
   </div>
- 
-  <script src="Script/adsr_complete_fixed.js"
-  <script src="Script/adsr_extension_v2_complete_fixed.js"></script>
-  <script src="Script/oscillateur_complete.js"></script>
-  <script src="Script/preset.js"></script>
-  <script src="Script/Filter.js"></script>
-  <script src="Script/burger_menu.js"></script>
-
-  
-</main>
-</body>
