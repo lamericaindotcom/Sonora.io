@@ -462,7 +462,7 @@ window.addEventListener('load', () => {
     adsr.setOscillatorSettings({ octave2: state.octave2 });
   });
 
-  /* ===== FILTRE - KNOBS ===== */
+    /* ===== KNOBS FILTRE ===== */
   const freqValDisplay = document.getElementById('freq-val');
   const qValDisplay = document.getElementById('q-val');
 
@@ -480,26 +480,13 @@ window.addEventListener('load', () => {
     if (qValDisplay) qValDisplay.textContent = v.toFixed(1);
   });
 
-  /* ===== SÉLECTION DES FORMES D'ONDE ===== */
-  document.querySelectorAll('input[name="wave1"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      adsr.setOscillatorSettings({ waveform1: e.target.value });
-    });
-  });
-
-  document.querySelectorAll('input[name="wave2"]').forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      adsr.setOscillatorSettings({ waveform2: e.target.value });
-    });
-  });
-
-  /* ===== TOGGLE SYNC ===== */
-  const syncToggle = document.getElementById('sync-toggle');
-  if (syncToggle) {
-    syncToggle.addEventListener('change', () => {
-      syncOn = syncToggle.checked;
-      adsr.setOscillatorSettings({ sync: syncOn });
-      console.log('🔄 Sync:', syncOn ? 'ON' : 'OFF');
+  /* ===== SÉLECTEUR TYPE DE FILTRE ===== */
+  const filterTypeSelect = document.getElementById('filter-type');
+  if (filterTypeSelect) {
+    filterTypeSelect.addEventListener('change', (e) => {
+      filterNode.type = e.target.value;
+      filterNeedsRedraw = true;
+      console.log('🎛️ Type de filtre:', e.target.value);
     });
   }
 
@@ -519,6 +506,7 @@ window.addEventListener('load', () => {
       }
     });
   }
+
 
   /* ===== CONTRÔLES ADSR - VERSION CORRIGÉE (FIXE!) ===== */
   function updateADSRDisplay() {
