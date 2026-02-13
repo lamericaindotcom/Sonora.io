@@ -91,8 +91,12 @@ const state = {
 };
 
 /* Initialiser le gestionnaire ADSR avec 4 voix polyphoniques */
-let adsr = new ADSRManager(audioCtx, masterOutput, 4);
+window.adsr = new ADSRManager(audioCtx, masterOutput, 4);
+const adsr = window.adsr;
 adsr.setAnalysers(analyser1, analyser2);
+if (adsr.startScopeMonitor) adsr.startScopeMonitor();
+if (adsr.drawADSRCurve) adsr.drawADSRCurve('adsr-curve');
+
 console.log('✅ ADSRManager initialisé avec surveillance intelligente des scopes');
 
 /* ===== FONCTIONS AUXILIAIRES ===== */
@@ -608,6 +612,9 @@ const keys = document.querySelectorAll('.keyboard .key');
 keys.forEach(key => {
   key.addEventListener('mousedown', async () => {
     if (audioCtx.state === 'suspended') await audioCtx.resume();
+    if (adsr.startScopeMonitor) adsr.startScopeMonitor();
+    if (adsr.drawADSRCurve) adsr.drawADSRCurve('adsr-curve');
+
     const midi = parseInt(key.dataset.midi, 10);
     triggerNoteOn(midi);
     key.classList.add('active');
