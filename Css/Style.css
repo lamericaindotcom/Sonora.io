@@ -372,3 +372,74 @@ body {
   box-shadow: inset 0 0 10px #000;
   margin-bottom: 15px;
 }
+/* ===== ADSR GRID (ligne séparée sous les oscillateurs) ===== */
+.adsr-grid {
+  display: flex;
+  width: 100%;
+  margin: 0.5rem auto 0;
+}
+
+.adsr-card {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== CONTRÔLES ADSR (knobs rotatifs) ===== */
+.adsr-controls {
+  display: flex;
+  justify-content: space-around;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 0;
+}
+
+.adsr-card .knob-wrap {
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.adsr-card .knob-wrap label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #bbb;
+  text-transform: uppercase;
+}
+
+.adsr-card .param-value {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--card-color, #a26bff);
+  font-weight: 700;
+}
+
+/* ===== COURBE ADSR ===== */
+.adsr-curve-container {
+  margin-bottom: 1rem;
+}
+
+.adsr-curve-container h4 {
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: #bbb;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== COMPTEUR DE VOIX ===== */
+.voice-count-display {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  color: #bbb;
+  padding-top: 0.5rem;
+  border-top: 1px solid #333;
+}
+
+.voice-count-display span:last-child {
+  color: var(--card-color, #a26bff);
+  font-weight: 700;
+}

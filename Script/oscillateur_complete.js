@@ -508,91 +508,54 @@ window.addEventListener('load', () => {
   }
 
 
-  /* ===== CONTRÔLES ADSR - VERSION CORRIGÉE (FIXE!) ===== */
+    /* ===== ADSR - KNOBS ROTATIFS ===== */
   function updateADSRDisplay() {
-    /* Récupérer les valeurs des sliders et les convertir en secondes */
     const attack = parseFloat(document.getElementById('attack-range')?.value || 100) / 1000;
     const decay = parseFloat(document.getElementById('decay-range')?.value || 300) / 1000;
     const sustain = parseFloat(document.getElementById('sustain-range')?.value || 0.7);
     const release = parseFloat(document.getElementById('release-range')?.value || 500) / 1000;
     
-    /* ✅ METTRE À JOUR LES PARAMÈTRES ADSR DANS LE GESTIONNAIRE */
     adsr.setADSR(attack, decay, sustain, release);
     
-    /* ✅ REDESSINER LA COURBE ADSR EN TEMPS RÉEL */
     if (adsr.drawADSRCurve) {
       adsr.drawADSRCurve('adsr-curve');
     }
   }
 
-  /* Événement pour le slider Attack */
-  const attackInput = document.getElementById('attack-range');
-  if (attackInput) {
-    attackInput.addEventListener('input', (e) => {
-      const val = Math.round(parseFloat(e.target.value));
-      const displayEl = document.getElementById('attack-display');
-      if (displayEl) displayEl.textContent = val + ' ms';
-      updateADSRDisplay();
-    });
-  }
+  // Attack Knob
+  attachKnob('attack-knob', 'attack-range', (v) => {
+    const val = Math.round(parseFloat(v));
+    const displayEl = document.getElementById('attack-display');
+    if (displayEl) displayEl.textContent = val + ' ms';
+    updateADSRDisplay();
+  });
 
-  /* Événement pour le slider Decay */
-  const decayInput = document.getElementById('decay-range');
-  if (decayInput) {
-    decayInput.addEventListener('input', (e) => {
-      const val = Math.round(parseFloat(e.target.value));
-      const displayEl = document.getElementById('decay-display');
-      if (displayEl) displayEl.textContent = val + ' ms';
-      updateADSRDisplay();
-    });
-  }
+  // Decay Knob
+  attachKnob('decay-knob', 'decay-range', (v) => {
+    const val = Math.round(parseFloat(v));
+    const displayEl = document.getElementById('decay-display');
+    if (displayEl) displayEl.textContent = val + ' ms';
+    updateADSRDisplay();
+  });
 
-  /* Événement pour le slider Sustain */
-  const sustainInput = document.getElementById('sustain-range');
-  if (sustainInput) {
-    sustainInput.addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value).toFixed(2);
-      const displayEl = document.getElementById('sustain-display');
-      if (displayEl) displayEl.textContent = val;
-      updateADSRDisplay();
-    });
-  }
+  // Sustain Knob
+  attachKnob('sustain-knob', 'sustain-range', (v) => {
+    const val = parseFloat(v).toFixed(2);
+    const displayEl = document.getElementById('sustain-display');
+    if (displayEl) displayEl.textContent = val;
+    updateADSRDisplay();
+  });
 
-  /* Événement pour le slider Release */
-  const releaseInput = document.getElementById('release-range');
-  if (releaseInput) {
-    releaseInput.addEventListener('input', (e) => {
-      const val = Math.round(parseFloat(e.target.value));
-      const displayEl = document.getElementById('release-display');
-      if (displayEl) displayEl.textContent = val + ' ms';
-      updateADSRDisplay();
-    });
-  }
+  // Release Knob
+  attachKnob('release-knob', 'release-range', (v) => {
+    const val = Math.round(parseFloat(v));
+    const displayEl = document.getElementById('release-display');
+    if (displayEl) displayEl.textContent = val + ' ms';
+    updateADSRDisplay();
+  });
 
-  /* Initialiser l'affichage ADSR au démarrage */
+  // Initialiser l'affichage ADSR au démarrage
   updateADSRDisplay();
-
-  /* ===== AFFICHAGE DU NOMBRE DE VOIX ACTIVES ===== */
-  setInterval(() => {
-    const status = adsr.getStatus();
-    const voiceCountEl = document.getElementById('voice-count');
-    if (voiceCountEl) {
-      voiceCountEl.textContent = `${status.activeVoices}/${status.totalVoices}`;
-    }
-  }, 100);
-
-  initUI();
-  
-  /* ✅ INITIALISER LA COURBE ADSR AU DÉMARRAGE */
-  setTimeout(() => {
-    if (adsr && adsr.drawADSRCurve) {
-      adsr.drawADSRCurve('adsr-curve');
-      console.log('✅ Courbe ADSR initialisée au démarrage');
-    }
-  }, 100);
-  
-  console.log('✅ Interface initialisée - Système ADSR entièrement opérationnel!');
-});
 
 /* ===== CLAVIER VIRTUEL (SOURIS) ===== */
 
@@ -656,5 +619,4 @@ function handleKey(event) {
 
 window.addEventListener('keydown', handleKey);
 window.addEventListener('keyup', handleKey);
-
-console.log('✅ oscillateur.js chargé - Système ADSR COMPLET et FONCTIONNEL!');
+})

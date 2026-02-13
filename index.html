@@ -237,48 +237,59 @@
   </div> <!-- /.synth-grid -->
 
 
-    <!-- ===== À AJOUTER DANS TON index.html ===== -->
 
-<!-- Section ADSR Envelope -->
-<section class="adsr-section">
-  <h2>ADSR Envelope</h2>
-  
-  <div class="adsr-controls">
-    <div class="adsr-control">
-      <label for="attack-range">Attack</label>
-      <input type="range" id="attack-range" min="0" max="2000" value="100" step="10">
-      <span id="attack-display">100 ms</span>
-    </div>
-
-    <div class="adsr-control">
-      <label for="decay-range">Decay</label>
-      <input type="range" id="decay-range" min="0" max="2000" value="300" step="10">
-      <span id="decay-display">300 ms</span>
-    </div>
-
-    <div class="adsr-control">
-      <label for="sustain-range">Sustain</label>
-      <input type="range" id="sustain-range" min="0" max="1" value="0.7" step="0.05">
-      <span id="sustain-display">0.70</span>
-    </div>
-
-    <div class="adsr-control">
-      <label for="release-range">Release</label>
-      <input type="range" id="release-range" min="0" max="2000" value="500" step="10">
-      <span id="release-display">500 ms</span>
+    <!-- ===== ADSR ENVELOPE CARD ===== -->
+  <div class="adsr-grid">
+    <div class="adsr-card card" data-color="purple" style="--card-color:#a26bff;">
+      <h3>ADSR Envelope</h3>
+      
+      <div class="adsr-controls">
+        <!-- Attack Knob -->
+        <div class="knob-wrap">
+          <canvas class="knob" id="attack-knob" width="60" height="60"></canvas>
+          <label>Attack</label>
+          <span class="param-value" id="attack-display">100 ms</span>
+          <input type="range" id="attack-range" min="0" max="2000" value="100" step="10" style="display:none;">
+        </div>
+        
+        <!-- Decay Knob -->
+        <div class="knob-wrap">
+          <canvas class="knob" id="decay-knob" width="60" height="60"></canvas>
+          <label>Decay</label>
+          <span class="param-value" id="decay-display">300 ms</span>
+          <input type="range" id="decay-range" min="0" max="2000" value="300" step="10" style="display:none;">
+        </div>
+        
+        <!-- Sustain Knob -->
+        <div class="knob-wrap">
+          <canvas class="knob" id="sustain-knob" width="60" height="60"></canvas>
+          <label>Sustain</label>
+          <span class="param-value" id="sustain-display">0.70</span>
+          <input type="range" id="sustain-range" min="0" max="1" value="0.7" step="0.05" style="display:none;">
+        </div>
+        
+        <!-- Release Knob -->
+        <div class="knob-wrap">
+          <canvas class="knob" id="release-knob" width="60" height="60"></canvas>
+          <label>Release</label>
+          <span class="param-value" id="release-display">500 ms</span>
+          <input type="range" id="release-range" min="0" max="2000" value="500" step="10" style="display:none;">
+        </div>
+      </div>
+      
+      <div class="adsr-curve-container">
+        <h4>Envelope Curve</h4>
+        <canvas id="adsr-curve" width="400" height="200"></canvas>
+      </div>
+      
+      <div class="voice-count-display">
+        <span>Active Voices:</span>
+        <span id="voice-count">0/4</span>
+      </div>
     </div>
   </div>
 
-  <div class="adsr-curve-container">
-    <h3>Envelope Curve</h3>
-    <canvas id="adsr-curve" width="400" height="200"></canvas>
-  </div>
 
-  <div class="voice-count-display">
-    <span>Active Voices:</span>
-    <span id="voice-count">0/4</span>
-  </div>
-</section>
 
 
 
