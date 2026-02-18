@@ -22,4 +22,3 @@ try {
     echo json_encode(['error' => 'Erreur de connexion à la BDD']);
     exit;
 }
-?>

@@ -3,38 +3,37 @@ header('Content-Type: application/json; charset=utf-8');
 require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    die(json_encode(['error' => 'Méthode non autorisée']));
+  http_response_code(405);
+  echo json_encode(['success' => false, 'error' => 'Méthode non autorisée']);
+  exit;
 }
 
-$json = file_get_contents('php://input');
-$data = json_decode($json, true);
+$raw = file_get_contents('php://input');
+$data = json_decode($raw, true);
 
-if (!isset($data['id'])) {
-    http_response_code(400);
-    die(json_encode(['error' => 'ID du preset manquant']));
+$id = isset($data['id']) ? (int)$data['id'] : 0;
+if ($id <= 0) {
+  http_response_code(400);
+  echo json_encode(['success' => false, 'error' => 'ID du preset manquant']);
+  exit;
 }
-
-$id = intval($data['id']);
 
 try {
-    $sql = "SELECT id, name, description, data FROM presets WHERE id = :id";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([':id' => $id]);
-    $preset = $stmt->fetch();
+  $sql = "SELECT id, name, description, data FROM presets WHERE id = :id";
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute([':id' => $id]);
+  $preset = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($preset) {
-        $preset['data'] = json_decode($preset['data'], true);
-        echo json_encode([
-            'success' => true,
-            'preset'  => $preset,
-        ]);
-    } else {
-        http_response_code(404);
-        echo json_encode(['error' => 'Preset non trouvé']);
-    }
+  if (!$preset) {
+    http_response_code(404);
+    echo json_encode(['success' => false, 'error' => 'Preset non trouvé']);
+    exit;
+  }
+
+  $preset['data'] = json_decode($preset['data'], true);
+
+  echo json_encode(['success' => true, 'preset' => $preset]);
 } catch (PDOException $e) {
-    http_response_code(500);
-    echo json_encode(['error' => 'Erreur lecture: ' . $e->getMessage()]);
+  http_response_code(500);
+  echo json_encode(['success' => false, 'error' => 'Erreur lecture']);
 }
-?>

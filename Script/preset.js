@@ -175,7 +175,23 @@ function loadPresetData(presetData) {
   }
 
   // Appliquer les formes d'onde aux oscillateurs si déjà créés
-  updateWaveforms();
+  //updateWaveforms();
+
+    // Appliquer aux oscillateurs (audio)
+  adsr.setOscillatorSettings({
+    waveform1: presetData.osc1?.waveform || 'sawtooth',
+    waveform2: presetData.osc2?.waveform || 'sawtooth',
+    vol1: state.vol1,
+    vol2: state.vol2,
+    fine1: state.fine1,
+    fine2: state.fine2,
+    semi1: state.semi1,
+    semi2: state.semi2,
+    octave1: state.octave1,q,
+    octave2: state.octave2,
+    sync: syncOn
+  });
+
 
   // ===== FILTRE UI =====
   const freqRange         = document.getElementById('freq-range');
@@ -225,7 +241,7 @@ async function savePreset() {
   const presetData = getCurrentPresetData();
 
   try {
-    const response = await fetch('api/save_preset.php', {
+    const response = await fetch('Api/save_preset.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -258,7 +274,7 @@ async function savePreset() {
  */
 async function listPresets() {
   try {
-    const response = await fetch('api/list_presets.php');
+    const response = await fetch('Api/list_presets.php');
     const result = await response.json();
 
     if (result.success) {
@@ -306,7 +322,7 @@ async function loadPreset() {
   }
 
   try {
-    const response = await fetch('api/load_preset.php', {
+    const response = await fetch('Api/load_preset.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -348,7 +364,7 @@ async function deletePreset() {
   }
 
   try {
-    const response = await fetch('api/delete_preset.php', {
+    const response = await fetch('Api/delete_preset.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
