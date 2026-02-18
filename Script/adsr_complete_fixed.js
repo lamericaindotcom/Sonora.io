@@ -210,9 +210,10 @@ class ADSRManager {
       v.gain1.gain.setValueAtTime(this.oscSettings.vol1, now);
       v.gain2.gain.setValueAtTime(this.oscSettings.vol2, now);
     }
+  }
 
 
-    reapplyPitchToActiveVoices(midiToFreqFn); {
+    reapplyPitchToActiveVoices(midiToFreqFn) {
     const now = this.audioCtx.currentTime;
 
     for (const v of this.voices) {
@@ -231,10 +232,10 @@ class ADSRManager {
       v.osc2.frequency.setValueAtTime(f2, now);
       v.osc2.detune.setValueAtTime(this.oscSettings.fine2 || 0, now);
     }
-  }
+   }
 
 
-  }
+  
 
   setAnalysers(analyser1, analyser2) {
     this.analyser1 = analyser1;
