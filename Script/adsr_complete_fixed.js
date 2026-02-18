@@ -210,6 +210,30 @@ class ADSRManager {
       v.gain1.gain.setValueAtTime(this.oscSettings.vol1, now);
       v.gain2.gain.setValueAtTime(this.oscSettings.vol2, now);
     }
+
+
+    reapplyPitchToActiveVoices(midiToFreqFn); {
+    const now = this.audioCtx.currentTime;
+
+    for (const v of this.voices) {
+      if (!v.active || v.midi == null) continue;
+
+      const base = midiToFreqFn(v.midi);
+
+      // osc1
+      const f1 = base * Math.pow(2, this.oscSettings.octave1) * Math.pow(2, this.oscSettings.semi1 / 12);
+      v.osc1.frequency.setValueAtTime(f1, now);
+      v.osc1.detune.setValueAtTime(this.oscSettings.fine1 || 0, now);
+
+      // osc2 (+ sync)
+      const base2 = this.oscSettings.sync ? base * 2 : base;
+      const f2 = base2 * Math.pow(2, this.oscSettings.octave2) * Math.pow(2, this.oscSettings.semi2 / 12);
+      v.osc2.frequency.setValueAtTime(f2, now);
+      v.osc2.detune.setValueAtTime(this.oscSettings.fine2 || 0, now);
+    }
+  }
+
+
   }
 
   setAnalysers(analyser1, analyser2) {

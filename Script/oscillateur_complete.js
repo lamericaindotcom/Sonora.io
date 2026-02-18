@@ -424,14 +424,17 @@ window.addEventListener('load', () => {
   attachKnob('volume1', 'volume1-range', (v) => {
     state.vol1 = parseFloat(v);
     adsr.setOscillatorSettings({ vol1: state.vol1 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
   attachKnob('fine1', 'fine1-range', (v) => {
     state.fine1 = parseFloat(v);
     adsr.setOscillatorSettings({ fine1: state.fine1 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
   attachKnob('semi1', 'semi1-range', (v) => {
     state.semi1 = parseFloat(v);
     adsr.setOscillatorSettings({ semi1: state.semi1 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
   attachKnob('tune1', 'tune1-range', (v) => {
     state.tune1 = parseFloat(v);
@@ -439,20 +442,24 @@ window.addEventListener('load', () => {
   attachKnob('octave1', 'octave1-range', (v) => {
     state.octave1 = parseFloat(v);
     adsr.setOscillatorSettings({ octave1: state.octave1 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
 
   /* ===== OSCILLATEUR 2 - KNOBS ===== */
   attachKnob('volume2', 'volume2-range', (v) => {
     state.vol2 = parseFloat(v);
     adsr.setOscillatorSettings({ vol2: state.vol2 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
   attachKnob('fine2', 'fine2-range', (v) => {
     state.fine2 = parseFloat(v);
     adsr.setOscillatorSettings({ fine2: state.fine2 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
   attachKnob('semi2', 'semi2-range', (v) => {
     state.semi2 = parseFloat(v);
     adsr.setOscillatorSettings({ semi2: state.semi2 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
   attachKnob('tune2', 'tune2-range', (v) => {
     state.tune2 = parseFloat(v);
@@ -460,6 +467,7 @@ window.addEventListener('load', () => {
   attachKnob('octave2', 'octave2-range', (v) => {
     state.octave2 = parseFloat(v);
     adsr.setOscillatorSettings({ octave2: state.octave2 });
+    adsr.reapplyPitchToActiveVoices(midiToFreq);
   });
 
     /* ===== KNOBS FILTRE ===== */
@@ -659,7 +667,6 @@ window.addEventListener('load', () => {
 
     attachKnob('filter-decay-knob', 'filter-decay-range', (v) => {
       document.getElementById('filter-decay-display').textContent = Math.round(v) + ' ms';
-      attachKnob('filter-decay-knob', 'filter-decay-range', (v) => {
     const displayEl = document.getElementById('filter-decay-display');
     if (displayEl) displayEl.textContent = Math.round(v) + ' ms';
     updateFilterADSRDisplay();
@@ -801,5 +808,3 @@ function handleKey(event) {
 
 window.addEventListener('keydown', handleKey);
 window.addEventListener('keyup', handleKey);
-})
-
