@@ -315,6 +315,27 @@ body {
   border-color: var(--orange);
 }
 
+/* Fieldset invisible visuellement mais accessible */
+fieldset.radio-group {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Legend invisible mais lisible par lecteurs d'écran */
+fieldset.radio-group legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* === SYNC SWITCH === */
 .sync-detune {
   margin-top: 10px;
@@ -617,3 +638,103 @@ body {
   padding: 10px 40px 10px 12px;
 }
 
+/*Responsivité*/
+  /*=====Tablette======*/
+
+  @media (max-width: 1024px) {
+
+  .synth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filter-card {
+    grid-column: span 2;
+  }
+
+}@media (max-width: 1024px) {
+  body {
+    padding: 14px;
+  }
+
+  .search input {
+    width: 200px;
+  }
+
+  .knob-row,
+  .adsr-controls,
+  .filter-knob-row {
+    gap: 0.5rem;
+  }
+}
+
+/*===== Mobile Large======*/
+
+@media (max-width: 768px) {
+  /* Header: on empile */
+  .header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .search input {
+    width: 100%;
+  }
+
+  /* Grilles : on passe en colonne */
+  .synth-grid,
+  .adsr-grid {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  /* Les cards prennent toute la largeur */
+  .osc-card,
+  .filter-card,
+  .adsr-card {
+    flex: 1 1 auto;
+  }
+
+  /* Alignements contrôles */
+  .knob-row,
+  .adsr-controls,
+  .filter-knob-row {
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+/* ======Petit Mobile====== */
+
+@media (max-width: 480px) {
+  .logo span {
+    font-size: 1.2rem;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  /* Réduire la taille des knobs */
+  .knob {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* Wave buttons: retour à la ligne */
+  .wave-group {
+    flex-wrap: wrap;
+  }
+
+  /* Canvas un peu moins haut */
+  .oscilloscope,
+  #filter-curve,
+  #adsr-curve,
+  #filter-adsr-curve {
+    height: 110px;
+  }
+}

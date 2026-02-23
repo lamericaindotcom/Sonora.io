@@ -4,125 +4,189 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Synthé Simple</title>
+
   <link rel="stylesheet" href="Css/Style.css">
   <link rel="stylesheet" href="Css/preset.css">
   <link rel="stylesheet" href="Css/keyboard.css">
   <link rel="stylesheet" href="Css/adsr.css">
-  
 
+  <!-- Accessibilité : label invisibles mais lisibles par lecteurs d'écran -->
+  <style>
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+  </style>
 </head>
+
 <body>
 <header class="header">
-  <div class="logo">
+  <div class="logo" aria-label="Nom de l’application">
     <span>SONORA</span>
   </div>
 
-  <form class="search">
-    <input type="text" placeholder="Rechercher un preset">
+  <form class="search" role="search" aria-label="Recherche de preset">
+    <label class="sr-only" for="searchPreset">Rechercher un preset</label>
+    <input id="searchPreset" type="text" placeholder="Rechercher un preset" aria-label="Rechercher un preset">
   </form>
 
-  <button class="burger" id="burgerbtn" aria-label="Menu">
+  <button
+    class="burger"
+    id="burgerbtn"
+    type="button"
+    aria-label="Ouvrir le menu"
+    aria-controls="navMenu"
+    aria-expanded="false"
+  >
     <span></span><span></span><span></span>
   </button>
 
-  <nav class="nav" id="navMenu">
-    <button id="presetsMenuBtn" class="nav-link">Presets</button>
-    <a href="#">Connexion</a>
-    <a href="#">Inscription</a>
+  <nav class="nav" id="navMenu" aria-label="Navigation principale">
+    <button id="presetsMenuBtn" class="nav-link" type="button" aria-haspopup="dialog" aria-controls="presetsModal">
+      Presets
+    </button>
+    <a href="#" aria-label="Aller à la page de connexion">Connexion</a>
+    <a href="#" aria-label="Aller à la page d'inscription">Inscription</a>
   </nav>
 </header>
 
 <main>
-  <!-- Modal Presets -->
-  <div id="presetsModal" class="presets-modal">
+  <!-- Modal Presets (dialog accessible) -->
+  <div
+    id="presetsModal"
+    class="presets-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="presetsModalTitle"
+    aria-hidden="true"
+  >
     <div class="presets-modal-content">
       <div class="presets-modal-header">
-        <h2>💾 Presets</h2>
-        <button id="closePresetsModal" class="close-btn">&times;</button>
+        <h2 id="presetsModalTitle">💾 Presets</h2>
+
+        <button
+          id="closePresetsModal"
+          class="close-btn"
+          type="button"
+          aria-label="Fermer la fenêtre des presets"
+        >
+          &times;
+        </button>
       </div>
 
       <div class="presets-modal-body">
         <!-- Section Save -->
         <div class="preset-section">
           <h3>Sauvegarder</h3>
+
           <div class="preset-save-form">
-            <input type="text" id="presetName" placeholder="Nom du preset" maxlength="100">
-            <button id="savePresetBtn">💾 SAVE</button>
+            <label class="sr-only" for="presetName">Nom du preset</label>
+            <input
+              type="text"
+              id="presetName"
+              placeholder="Nom du preset"
+              maxlength="100"
+              aria-label="Nom du preset à sauvegarder"
+            >
+
+            <button id="savePresetBtn" type="button" aria-label="Sauvegarder le preset">
+              💾 SAVE
+            </button>
           </div>
         </div>
 
         <!-- Section Load/Delete -->
         <div class="preset-section">
           <h3>Charger / Supprimer</h3>
-          <button id="listPresetsBtn" class="btn-list">📋 Afficher mes presets</button>
-          
+
+          <button id="listPresetsBtn" class="btn-list" type="button" aria-label="Afficher la liste de mes presets">
+            📋 Afficher mes presets
+          </button>
+
           <div id="presetsList" class="presets-list" style="display: none;">
-            <select id="presetsSelect" size="8">
+            <label class="sr-only" for="presetsSelect">Liste des presets</label>
+            <select id="presetsSelect" size="8" aria-label="Liste des presets">
               <option value="">-- Sélectionnez un preset --</option>
             </select>
+
             <div class="preset-actions">
-              <button id="loadPresetBtn">📂 LOAD</button>
-              <button id="deletePresetBtn">🗑️ DELETE</button>
+              <button id="loadPresetBtn" type="button" aria-label="Charger le preset sélectionné">
+                📂 LOAD
+              </button>
+              <button id="deletePresetBtn" type="button" aria-label="Supprimer le preset sélectionné">
+                🗑️ DELETE
+              </button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
 
   <!-- Overlay du modal -->
-  <div id="presetsOverlay" class="presets-overlay"></div>
+  <div id="presetsOverlay" class="presets-overlay" aria-hidden="true"></div>
 
   <div class="synth-grid">
 
     <!-- OSCILLATEUR 1 -->
     <div class="osc-card card" data-color="orange" style="--card-color:#ff5c2f;">
       <h3>Oscillateur 1</h3>
+
       <div class="oscillo-wrap">
-        <canvas class="oscilloscope" id="osc1-scope" width="400" height="120"></canvas>
+        <canvas
+          class="oscilloscope"
+          id="osc1-scope"
+          width="400"
+          height="120"
+          aria-label="Oscilloscope oscillateur 1"
+        ></canvas>
       </div>
 
-      <div class="radio-group wave-group">
+      <fieldset class="radio-group wave-group" aria-label="Forme d’onde oscillateur 1">
+        <legend class="sr-only">Forme d’onde oscillateur 1</legend>
         <label><input type="radio" name="wave1" value="sine" checked> Sine</label>
         <label><input type="radio" name="wave1" value="square"> Square</label>
         <label><input type="radio" name="wave1" value="sawtooth"> Saw</label>
         <label><input type="radio" name="wave1" value="triangle"> Triangle</label>
-      </div>
+      </fieldset>
 
       <div class="knob-row">
-        <!-- Volume -->
         <div class="knob-wrap">
-          <canvas class="knob" id="volume1" width="60" height="60"></canvas>
+          <canvas class="knob" id="volume1" width="60" height="60" aria-label="Volume oscillateur 1"></canvas>
           <label>Volume</label>
-          <input type="range" id="volume1-range" min="0" max="1" step="0.01" value="0.5" style="display:none;">
+          <input type="range" id="volume1-range" min="0" max="1" step="0.01" value="0.5" style="display:none;" aria-label="Réglage volume oscillateur 1">
         </div>
 
-        <!-- Octave 1 -->
         <div class="knob-wrap">
-          <canvas class="knob" id="octave1" width="60" height="60"></canvas>
+          <canvas class="knob" id="octave1" width="60" height="60" aria-label="Octave oscillateur 1"></canvas>
           <label>Octave</label>
-          <input type="range" id="octave1-range" min="-4" max="4" step="1" value="0" style="display:none;">
+          <input type="range" id="octave1-range" min="-4" max="4" step="1" value="0" style="display:none;" aria-label="Réglage octave oscillateur 1">
         </div>
 
-        <!-- Fine -->
         <div class="knob-wrap">
-          <canvas class="knob" id="fine1" width="60" height="60"></canvas>
+          <canvas class="knob" id="fine1" width="60" height="60" aria-label="Fine tune oscillateur 1"></canvas>
           <label>Fine</label>
-          <input type="range" id="fine1-range" min="-50" max="50" value="0" style="display:none;">
+          <input type="range" id="fine1-range" min="-50" max="50" value="0" style="display:none;" aria-label="Réglage fine oscillateur 1">
         </div>
 
-        <!-- Semitone -->
         <div class="knob-wrap">
-          <canvas class="knob" id="semi1" width="60" height="60"></canvas>
+          <canvas class="knob" id="semi1" width="60" height="60" aria-label="Semitone oscillateur 1"></canvas>
           <label>Semitone</label>
-          <input type="range" id="semi1-range" min="-12" max="12" value="0" style="display:none;">
+          <input type="range" id="semi1-range" min="-12" max="12" value="0" style="display:none;" aria-label="Réglage demi-tons oscillateur 1">
         </div>
 
-        <!-- Tune -->
         <div class="knob-wrap">
-          <canvas class="knob" id="tune1" width="60" height="60"></canvas>
+          <canvas class="knob" id="tune1" width="60" height="60" aria-label="Tune oscillateur 1"></canvas>
           <label>Tune</label>
-          <input type="range" id="tune1-range" min="-12" max="12" value="0" style="display:none;">
+          <input type="range" id="tune1-range" min="-12" max="12" value="0" style="display:none;" aria-label="Réglage tune oscillateur 1">
         </div>
       </div>
     </div>
@@ -130,62 +194,64 @@
     <!-- OSCILLATEUR 2 -->
     <div class="osc-card card" data-color="orange" style="--card-color:#ff5c2f;">
       <h3>Oscillateur 2</h3>
+
       <div class="oscillo-wrap">
-        <canvas class="oscilloscope" id="osc2-scope" width="400" height="120"></canvas>
+        <canvas
+          class="oscilloscope"
+          id="osc2-scope"
+          width="400"
+          height="120"
+          aria-label="Oscilloscope oscillateur 2"
+        ></canvas>
       </div>
 
       <div class="wave-sync-row">
-        <div class="radio-group wave-group">
+        <fieldset class="radio-group wave-group" aria-label="Forme d’onde oscillateur 2">
+          <legend class="sr-only">Forme d’onde oscillateur 2</legend>
           <label><input type="radio" name="wave2" value="sine" checked> Sine</label>
           <label><input type="radio" name="wave2" value="square"> Square</label>
           <label><input type="radio" name="wave2" value="sawtooth"> Saw</label>
           <label><input type="radio" name="wave2" value="triangle"> Triangle</label>
-        </div>
+        </fieldset>
       </div>
 
       <div class="knob-row">
-        <!-- Volume -->
         <div class="knob-wrap">
-          <canvas class="knob" id="volume2" width="60" height="60"></canvas>
+          <canvas class="knob" id="volume2" width="60" height="60" aria-label="Volume oscillateur 2"></canvas>
           <label>Volume</label>
-          <input type="range" id="volume2-range" min="0" max="1" step="0.01" value="0.5" style="display:none;">
+          <input type="range" id="volume2-range" min="0" max="1" step="0.01" value="0.5" style="display:none;" aria-label="Réglage volume oscillateur 2">
         </div>
 
-        <!-- Octave 2 -->
         <div class="knob-wrap">
-          <canvas class="knob" id="octave2" width="60" height="60"></canvas>
+          <canvas class="knob" id="octave2" width="60" height="60" aria-label="Octave oscillateur 2"></canvas>
           <label>Octave</label>
-          <input type="range" id="octave2-range" min="-4" max="4" step="1" value="0" style="display:none;">
+          <input type="range" id="octave2-range" min="-4" max="4" step="1" value="0" style="display:none;" aria-label="Réglage octave oscillateur 2">
         </div>
 
-        <!-- Fine -->
         <div class="knob-wrap">
-          <canvas class="knob" id="fine2" width="60" height="60"></canvas>
+          <canvas class="knob" id="fine2" width="60" height="60" aria-label="Fine tune oscillateur 2"></canvas>
           <label>Fine</label>
-          <input type="range" id="fine2-range" min="-50" max="50" value="0" style="display:none;">
+          <input type="range" id="fine2-range" min="-50" max="50" value="0" style="display:none;" aria-label="Réglage fine oscillateur 2">
         </div>
 
-        <!-- Semitone -->
         <div class="knob-wrap">
-          <canvas class="knob" id="semi2" width="60" height="60"></canvas>
+          <canvas class="knob" id="semi2" width="60" height="60" aria-label="Semitone oscillateur 2"></canvas>
           <label>Semitone</label>
-          <input type="range" id="semi2-range" min="-12" max="12" value="0" style="display:none;">
+          <input type="range" id="semi2-range" min="-12" max="12" value="0" style="display:none;" aria-label="Réglage demi-tons oscillateur 2">
         </div>
 
-        <!-- Tune -->
         <div class="knob-wrap">
-          <canvas class="knob" id="tune2" width="60" height="60"></canvas>
+          <canvas class="knob" id="tune2" width="60" height="60" aria-label="Tune oscillateur 2"></canvas>
           <label>Tune</label>
-          <input type="range" id="tune2-range" min="-12" max="12" value="0" style="display:none;">
+          <input type="range" id="tune2-range" min="-12" max="12" value="0" style="display:none;" aria-label="Réglage tune oscillateur 2">
         </div>
       </div>
 
-      <!-- Sync toggle -->
       <div class="sync-detune">
         <label class="sync-toggle">
-          <input type="checkbox" id="sync-toggle">
-          <span class="sync-switch"></span>
-          <span class="sync-label">Sync Osc2 -> Osc1</span>
+          <input type="checkbox" id="sync-toggle" aria-label="Activer la synchronisation Osc2 vers Osc1">
+          <span class="sync-switch" aria-hidden="true"></span>
+          <span class="sync-label">Sync Osc2 -&gt; Osc1</span>
         </label>
       </div>
     </div>
@@ -196,19 +262,19 @@
 
       <div class="filter-bypass">
         <label class="filter-bypass-label">
-          <input type="checkbox" id="filter-bypass">
+          <input type="checkbox" id="filter-bypass" aria-label="Activer ou désactiver le bypass du filtre">
           <span>Bypass</span>
         </label>
       </div>
 
       <div class="oscillo-wrap">
-        <canvas id="filter-curve" width="400" height="120"></canvas>
+        <canvas id="filter-curve" width="400" height="120" aria-label="Courbe de réponse du filtre"></canvas>
       </div>
 
       <div class="filter-knob-row">
         <div class="filter-type-wrap">
-          <label>Type</label>
-          <select id="filter-type">
+          <label for="filter-type">Type</label>
+          <select id="filter-type" aria-label="Type de filtre">
             <option value="lowpass">Lowpass</option>
             <option value="highpass">Highpass</option>
             <option value="bandpass">Bandpass</option>
@@ -217,165 +283,149 @@
         </div>
 
         <div class="knob-wrap">
-          <canvas class="knob" id="filterFreq" width="60" height="60"></canvas>
+          <canvas class="knob" id="filterFreq" width="60" height="60" aria-label="Cutoff du filtre"></canvas>
           <label>Cutoff</label>
           <span class="param-value" id="freq-val">800 Hz</span>
-          <input type="range" id="freq-range" min="40" max="6000" step="1" value="800" style="display:none;">
+          <input type="range" id="freq-range" min="40" max="6000" step="1" value="800" style="display:none;" aria-label="Réglage cutoff du filtre">
         </div>
 
         <div class="knob-wrap">
-          <canvas class="knob" id="filterQ" width="60" height="60"></canvas>
+          <canvas class="knob" id="filterQ" width="60" height="60" aria-label="Résonance Q du filtre"></canvas>
           <label>Q</label>
           <span class="param-value" id="q-val">1.2</span>
-          <input type="range" id="q-range" min="0.1" max="12" step="0.1" value="1.2" style="display:none;">
+          <input type="range" id="q-range" min="0.1" max="12" step="0.1" value="1.2" style="display:none;" aria-label="Réglage résonance Q du filtre">
         </div>
       </div>
     </div>
-
-
-
-  </div> <!-- /.synth-grid -->
-
-
-
- <!-- ===== LIGNE 2 : AMP ENVELOPE + FILTER ENVELOPE ===== -->
-<div class="adsr-grid">
-  <!-- AMP ENVELOPE (Amplitude) -->
-  <div class="adsr-card card" data-color="purple" style="--card-color:#a26bff;">
-    <h3>Amp Envelope</h3>
-    
-    <div class="adsr-curve-container">
-      <canvas id="adsr-curve" width="400" height="160"></canvas>
-    </div>
-    
-    <div class="adsr-controls">
-      <div class="knob-wrap">
-        <canvas class="knob" id="attack-knob" width="60" height="60"></canvas>
-        <label>Attack</label>
-        <span class="param-value" id="attack-display">100 ms</span>
-        <input type="range" id="attack-range" min="0" max="2000" value="100" step="10" style="display:none;">
-      </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="decay-knob" width="60" height="60"></canvas>
-        <label>Decay</label>
-        <span class="param-value" id="decay-display">300 ms</span>
-        <input type="range" id="decay-range" min="0" max="2000" value="300" step="10" style="display:none;">
-      </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="sustain-knob" width="60" height="60"></canvas>
-        <label>Sustain</label>
-        <span class="param-value" id="sustain-display">0.70</span>
-        <input type="range" id="sustain-range" min="0" max="1" value="0.7" step="0.05" style="display:none;">
-      </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="release-knob" width="60" height="60"></canvas>
-        <label>Release</label>
-        <span class="param-value" id="release-display">500 ms</span>
-        <input type="range" id="release-range" min="0" max="2000" value="500" step="10" style="display:none;">
-      </div>
-    </div>
-    
-    <div class="voice-count-display">
-      <span>Active Voices:</span>
-      <span id="voice-count">0/4</span>
-    </div>
   </div>
 
-  <!-- FILTER ENVELOPE -->
-  <div class="adsr-card card" data-color="blue" style="--card-color:#39caff;">
-    <h3>Filter Envelope</h3>
-    
-    <div class="adsr-curve-container">
-      <canvas id="filter-adsr-curve" width="400" height="160"></canvas>
+  <!-- ===== LIGNE 2 : AMP ENVELOPE + FILTER ENVELOPE ===== -->
+  <div class="adsr-grid">
+    <div class="adsr-card card" data-color="purple" style="--card-color:#a26bff;">
+      <h3>Amp Envelope</h3>
+
+      <div class="adsr-curve-container">
+        <canvas id="adsr-curve" width="400" height="160" aria-label="Courbe ADSR amplitude"></canvas>
+      </div>
+
+      <div class="adsr-controls" aria-label="Contrôles ADSR amplitude">
+        <div class="knob-wrap">
+          <canvas class="knob" id="attack-knob" width="60" height="60" aria-label="Attack amplitude"></canvas>
+          <label>Attack</label>
+          <span class="param-value" id="attack-display">100 ms</span>
+          <input type="range" id="attack-range" min="0" max="2000" value="100" step="10" style="display:none;" aria-label="Réglage attack amplitude">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="decay-knob" width="60" height="60" aria-label="Decay amplitude"></canvas>
+          <label>Decay</label>
+          <span class="param-value" id="decay-display">300 ms</span>
+          <input type="range" id="decay-range" min="0" max="2000" value="300" step="10" style="display:none;" aria-label="Réglage decay amplitude">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="sustain-knob" width="60" height="60" aria-label="Sustain amplitude"></canvas>
+          <label>Sustain</label>
+          <span class="param-value" id="sustain-display">0.70</span>
+          <input type="range" id="sustain-range" min="0" max="1" value="0.7" step="0.05" style="display:none;" aria-label="Réglage sustain amplitude">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="release-knob" width="60" height="60" aria-label="Release amplitude"></canvas>
+          <label>Release</label>
+          <span class="param-value" id="release-display">500 ms</span>
+          <input type="range" id="release-range" min="0" max="2000" value="500" step="10" style="display:none;" aria-label="Réglage release amplitude">
+        </div>
+      </div>
+
+      <div class="voice-count-display" aria-label="Nombre de voix actives">
+        <span>Active Voices:</span>
+        <span id="voice-count">0/4</span>
+      </div>
     </div>
-    
-    <div class="adsr-controls">
-      <div class="knob-wrap">
-        <canvas class="knob" id="filter-attack-knob" width="60" height="60"></canvas>
-        <label>Attack</label>
-        <span class="param-value" id="filter-attack-display">50 ms</span>
-        <input type="range" id="filter-attack-range" min="0" max="2000" value="50" step="10" style="display:none;">
+
+    <div class="adsr-card card" data-color="blue" style="--card-color:#39caff;">
+      <h3>Filter Envelope</h3>
+
+      <div class="adsr-curve-container">
+        <canvas id="filter-adsr-curve" width="400" height="160" aria-label="Courbe ADSR filtre"></canvas>
       </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="filter-decay-knob" width="60" height="60"></canvas>
-        <label>Decay</label>
-        <span class="param-value" id="filter-decay-display">200 ms</span>
-        <input type="range" id="filter-decay-range" min="0" max="2000" value="200" step="10" style="display:none;">
+
+      <div class="adsr-controls" aria-label="Contrôles ADSR filtre">
+        <div class="knob-wrap">
+          <canvas class="knob" id="filter-attack-knob" width="60" height="60" aria-label="Attack filtre"></canvas>
+          <label>Attack</label>
+          <span class="param-value" id="filter-attack-display">50 ms</span>
+          <input type="range" id="filter-attack-range" min="0" max="2000" value="50" step="10" style="display:none;" aria-label="Réglage attack filtre">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="filter-decay-knob" width="60" height="60" aria-label="Decay filtre"></canvas>
+          <label>Decay</label>
+          <span class="param-value" id="filter-decay-display">200 ms</span>
+          <input type="range" id="filter-decay-range" min="0" max="2000" value="200" step="10" style="display:none;" aria-label="Réglage decay filtre">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="filter-sustain-knob" width="60" height="60" aria-label="Sustain filtre"></canvas>
+          <label>Sustain</label>
+          <span class="param-value" id="filter-sustain-display">0.30</span>
+          <input type="range" id="filter-sustain-range" min="0" max="1" value="0.3" step="0.05" style="display:none;" aria-label="Réglage sustain filtre">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="filter-release-knob" width="60" height="60" aria-label="Release filtre"></canvas>
+          <label>Release</label>
+          <span class="param-value" id="filter-release-display">300 ms</span>
+          <input type="range" id="filter-release-range" min="0" max="2000" value="300" step="10" style="display:none;" aria-label="Réglage release filtre">
+        </div>
+
+        <div class="knob-wrap">
+          <canvas class="knob" id="filter-amount-knob" width="60" height="60" aria-label="Amount envelope filtre"></canvas>
+          <label>Amount</label>
+          <span class="param-value" id="filter-amount-display">2000 Hz</span>
+          <input type="range" id="filter-amount-range" min="0" max="5000" value="2000" step="50" style="display:none;" aria-label="Réglage amount envelope filtre">
+        </div>
       </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="filter-sustain-knob" width="60" height="60"></canvas>
-        <label>Sustain</label>
-        <span class="param-value" id="filter-sustain-display">0.30</span>
-        <input type="range" id="filter-sustain-range" min="0" max="1" value="0.3" step="0.05" style="display:none;">
+
+      <div class="voice-count-display">
+        <label class="filter-env-toggle">
+          <input type="checkbox" id="filter-env-toggle" checked aria-label="Activer ou désactiver l’enveloppe du filtre">
+          <span class="sync-switch" aria-hidden="true"></span>
+          <span>Envelope On</span>
+        </label>
       </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="filter-release-knob" width="60" height="60"></canvas>
-        <label>Release</label>
-        <span class="param-value" id="filter-release-display">300 ms</span>
-        <input type="range" id="filter-release-range" min="0" max="2000" value="300" step="10" style="display:none;">
-      </div>
-      
-      <div class="knob-wrap">
-        <canvas class="knob" id="filter-amount-knob" width="60" height="60"></canvas>
-        <label>Amount</label>
-        <span class="param-value" id="filter-amount-display">2000 Hz</span>
-        <input type="range" id="filter-amount-range" min="0" max="5000" value="2000" step="50" style="display:none;">
-      </div>
-    </div>
-    
-    <div class="voice-count-display">
-      <label class="filter-env-toggle">
-        <input type="checkbox" id="filter-env-toggle" checked>
-        <span class="sync-switch"></span>
-        <span>Envelope On</span>
-      </label>
     </div>
   </div>
-</div>
-
-
-
-
-
-
-
-
 
   <!-- CLAVIER VIRTUEL -->
   <div class="play-and-keyboard">
-    <div class="keyboard">
+    <div class="keyboard" aria-label="Clavier virtuel">
       <!-- touches blanches -->
-      <button class="key white" data-midi="60">C</button>
-      <button class="key white" data-midi="62">D</button>
-      <button class="key white" data-midi="64">E</button>
-      <button class="key white" data-midi="65">F</button>
-      <button class="key white" data-midi="67">G</button>
-      <button class="key white" data-midi="69">A</button>
-      <button class="key white" data-midi="71">B</button>
+      <button class="key white" data-midi="60" type="button" aria-label="Note Do">C</button>
+      <button class="key white" data-midi="62" type="button" aria-label="Note Ré">D</button>
+      <button class="key white" data-midi="64" type="button" aria-label="Note Mi">E</button>
+      <button class="key white" data-midi="65" type="button" aria-label="Note Fa">F</button>
+      <button class="key white" data-midi="67" type="button" aria-label="Note Sol">G</button>
+      <button class="key white" data-midi="69" type="button" aria-label="Note La">A</button>
+      <button class="key white" data-midi="71" type="button" aria-label="Note Si">B</button>
 
       <!-- touches noires -->
-      <button class="key black" data-midi="61"></button> <!-- C# -->
-      <button class="key black" data-midi="63"></button> <!-- D# -->
-      <button class="key black" data-midi="66"></button> <!-- F# -->
-      <button class="key black" data-midi="68"></button> <!-- G# -->
-      <button class="key black" data-midi="70"></button> <!-- A# -->
+      <button class="key black" data-midi="61" type="button" aria-label="Note Do dièse"></button>
+      <button class="key black" data-midi="63" type="button" aria-label="Note Ré dièse"></button>
+      <button class="key black" data-midi="66" type="button" aria-label="Note Fa dièse"></button>
+      <button class="key black" data-midi="68" type="button" aria-label="Note Sol dièse"></button>
+      <button class="key black" data-midi="70" type="button" aria-label="Note La dièse"></button>
     </div>
   </div>
- 
+
   <script src="Script/adsr_complete_fixed.js"></script>
   <script src="Script/oscillateur_complete.js"></script>
   <script src="Script/adsr_extension_v2_complete_fixed.js"></script>
   <script src="Script/preset.js"></script>
   <script src="Script/Filter.js"></script>
   <script src="Script/burger_menu.js"></script>
-
-
-  
 </main>
+
 </body>
+</html>
